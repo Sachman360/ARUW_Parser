@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Parser {
     ArrayList<Integer> data = new ArrayList<Integer>();
-    ArrayList<int[]> packets = new ArrayList<int[]>();
+    ArrayList<ArrayList<Integer>> packets = new ArrayList<ArrayList<Integer>>();
     int numPackets;
     boolean isVelocity;
     boolean isVision;
@@ -21,26 +21,24 @@ public class Parser {
         data.add(n);
         numValues++;
         if(numValues == 1) {
+            packets.add(new ArrayList<Integer>());
+            packets.get(numPackets).add(n);
             if(n == 1) {
-                packets.add(new int[3]);
-                packets.get(numPackets)[numValues - 1] = n;
                 isVelocity = true;
             } else if(n == 2) {
                 isVision = true;
             }
         } else if(isVelocity) {
-            packets.get(numPackets)[numValues - 1] = n;
+            packets.get(numPackets).add(n);
             if(numValues == 3) {
                 finishPacket();
             }
         } else if(isVision) {
             if(numValues == 2) {
                 max = n * 2;
-                packets.add(new int[max + 2]);
-                packets.get(numPackets)[0] = 2;
-                packets.get(numPackets)[1] = n;
+                packets.get(numPackets).add(n);
             } else {
-                packets.get(numPackets)[numValues - 1] = n;
+                packets.get(numPackets).add(n);
                 if(numValues == max + 2) {
                     finishPacket();
                 }
@@ -55,20 +53,23 @@ public class Parser {
         isVision = false;
     }
 
-    public void printPackets() {
+    public String toString() {
+        String p = "";
         for(int i = 0; i < packets.size(); i++) {
-            System.out.print("{");
-            for(int j = 0; j < packets.get(i).length - 1; j++) {
-                System.out.print(packets.get(i)[j] + ", ");
-            }
-            System.out.println(packets.get(i)[packets.get(i).length - 1] + "}");
+            p += arrayListToString(packets.get(i)) + "\n";
         }
+        return p;
     }
-    public void printData() {
-        System.out.print("{");
-        for(int i = 0; i < data.size() - 1; i++) {
-            System.out.print(data.get(i) + ", ");
+    public String dataToString() {
+        return arrayListToString(data);
+    }
+
+    public String arrayListToString(ArrayList<Integer> arr) {
+        String list = "{";
+        for(int i = 0; i < arr.size() - 1; i++) {
+            list += arr.get(i) + ", ";
         }
-        System.out.println(data.get(data.size() - 1) + "}");
+        list += arr.get(arr.size() - 1) + "}";
+        return list;
     }
 }
