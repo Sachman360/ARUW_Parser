@@ -6,6 +6,7 @@ public class Main {
         // into the Parser.
         int[] data = {2, 1, 2, 1, 1, 2, 3, 1, 4, 5, 2, 2, 1, 4, 5, 9, 1, 7, 8, 2, 3, 4, 5, 6, 7, 8, 9, 1};
         feedData(p, data);
+
         System.out.println(p.dataToString());
         System.out.println(p);
     }
