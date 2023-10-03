@@ -69,22 +69,14 @@ public class Parser {
     public String toString() {
         String p = "";
         for(int i = 0; i < packets.size(); i++) {
-            p += arrayListToString(packets.get(i)) + "\n";
+            p += packets.get(i) + "\n";
         }
         return p;
     }
 
-    public String dataToString() {
-        return arrayListToString(data);
+    // returns data in string form
+    public String getData() {
+        return data + "";
     }
 
-    // Helpful method to print arrayLists.
-    public String arrayListToString(ArrayList<Integer> arr) {
-        String list = "{";
-        for(int i = 0; i < arr.size() - 1; i++) {
-            list += arr.get(i) + ", ";
-        }
-        list += arr.get(arr.size() - 1) + "}";
-        return list;
-    }
 }
